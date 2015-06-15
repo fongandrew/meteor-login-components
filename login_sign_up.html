@@ -1,0 +1,59 @@
+<template name="loginOrSignUp">{{#with addContext}}
+  <form id="loginOrSignUp" class="{{mode}}">
+    {{#if errorMsg}}<span class="error">
+      <i class="fa fa-warning"></i>
+      {{#if _eq errorMsg "bad-login"}}Invalid Login{{/if}}
+      {{#if _eq errorMsg "bad-email"}}Invalid Email Address{{/if}}
+      {{#if _eq errorMsg "bad-password"}}Password Required{{/if}}
+      {{#if _eq errorMsg "duplicate-email"}}
+        Account with this email address already exists
+      {{/if}}
+      {{#if _eq errorMsg "no-email"}}User Not Found{{/if}}
+      {{#if _eq errorMsg "unknown"}}Unknown Error{{/if}}
+    </span>{{/if}}
+
+    <!-- Success message -->
+    {{#if saved}}<span class="msg success">
+      {{#if _eq mode "forgot-pw"}}
+        <i class="fa fa-check"></i>
+        Password reset sent
+      {{/if}}
+    </span>{{/if}}
+
+    <div>
+      <label for="email">Email Address</label>
+      <input type="text" id="email" name="email"
+             placeholder="email@example.com" />
+    </div>
+
+    {{#unless _eq mode "forgot-pw"}}<div>
+      <label for="email">Password</label>
+      <input type="password" id="password" name="password"
+             placeholder="password" />
+    </div>{{/unless}}
+
+    <!-- Main button -->
+    {{#if _eq mode "sign-up"}}
+      {{> saveButton saving=saving 
+                     buttonText="Sign Up"}}
+    {{else}}{{#if _eq mode "forgot-pw"}}
+      {{> saveButton saving=saving 
+                     buttonText="Reset Password"}}
+    {{else}}
+      {{> saveButton saving=saving 
+                     buttonText="Login"}}
+    {{/if}}{{/if}}
+
+    <!-- Links to other modes -->
+    <span class="mode-links">
+      {{#unless _eq mode "forgot-pw"}}
+        <span class="link forgot-pw-link">Forgot Password?</span>
+      {{else}}
+        <span class="link login-link">Login</span>
+      {{/unless}}
+      {{#unless _eq mode "sign-up"}}
+        <span class="link sign-up-link">Sign Up</span>
+      {{/unless}}
+    </span>
+  </form>
+{{/with}}</template>
