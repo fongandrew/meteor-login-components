@@ -1,4 +1,8 @@
 <template name="loginOrSignUp">{{#with addContext}}
+  {{#if showTabs}}
+    {{> _loginModeTabs}}
+  {{/if}}
+
   <form id="loginOrSignUp" class="{{mode}}">
     {{#if errorMsg}}<span class="error">
       <i class="fa fa-warning"></i>
@@ -45,15 +49,41 @@
     {{/if}}{{/if}}
 
     <!-- Links to other modes -->
-    <span class="mode-links">
-      {{#unless _eq mode "forgot-pw"}}
-        <span class="link forgot-pw-link">Forgot Password?</span>
-      {{else}}
-        <span class="link login-link">Login</span>
-      {{/unless}}
-      {{#unless _eq mode "sign-up"}}
-        <span class="link sign-up-link">Sign Up</span>
-      {{/unless}}
-    </span>
+    {{#unless showTabs}}
+      <span class="mode-links">
+        {{#unless _eq mode "forgot-pw"}}
+          <span class="link forgot-pw-link">Forgot Password?</span>
+        {{/unless}}
+        {{#unless _eq mode "login"}}
+          <span class="link login-link">Login</span>
+        {{/unless}}
+        {{#unless _eq mode "sign-up"}}
+          <span class="link sign-up-link">Sign Up</span>
+        {{/unless}}
+      </span>
+
+    {{else}}{{#unless _eq mode "sign-up"}}
+      <span class="mode-links">
+        {{#unless _eq mode "forgot-pw"}}
+          <span class="link forgot-pw-link">Forgot Password?</span>
+        {{else}}
+          <span class="link login-link">Login</span>
+        {{/unless}}
+      </span>
+    {{/unless}}{{/unless}}
   </form>
 {{/with}}</template>
+
+<template name="_loginModeTabs">
+  <!-- Links to other modes -->
+  <ul class="mode-tabs tabs">
+    <li class="tab login-link">
+      <a class="{{#unless _eq mode "sign-up"}}active{{/unless}}" 
+         href="#">Login</a>
+    </li>
+    <li class="tab sign-up-link">
+      <a class="{{#if _eq mode "sign-up"}}active{{/if}}" 
+         href="#">Sign Up</a>
+    </li>
+  </ul>
+</template>

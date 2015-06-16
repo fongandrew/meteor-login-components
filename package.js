@@ -8,12 +8,15 @@ Package.describe({
 Package.onUse(function(api) {
   'use strict';
   api.versionsFrom('METEOR@1.1.0.2');
-  api.use('fongandrew:spacebars-helpers');
-  api.use('fongandrew:save-button');
-  api.use('fongandrew:instance-vars');
-  api.use('fongandrew:re-common');
-  api.use('templating', 'client');
-  api.use('underscore');
+  api.use([
+    'fongandrew:spacebars-helpers',
+    'fongandrew:save-button',
+    'fongandrew:instance-vars',
+    'fongandrew:re-common',
+    'reactive-var',
+    'templating',
+    'underscore'
+  ], 'client');
   api.export('LoginComponents');
   api.addFiles([
     '_config.js',

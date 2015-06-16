@@ -4,12 +4,6 @@
 
   Template.loginOrSignUp.onCreated(function() {
     this.createVars({
-      // Which account flow we're in
-      // * "sign-up" - sign up as new user
-      // * "forgot-pw" - request password reset
-      // * "login" - login mode (default) 
-      mode: 'login',
-
       // Error message to show
       // * "bad-email" - Blank or invalid email address
       // * "bad-password" - Blank or invalid password
@@ -34,7 +28,10 @@
   Template.loginOrSignUp.helpers({
     addContext: function() {
       var instance = Template.instance();
-      return _.extend(instance.getVars(), this);
+      return _.extend(instance.getVars(), {
+        mode: LoginComponents.mode.get(),
+        showTabs: LoginComponents.showTabs
+      }, this);
     }
   });
 
@@ -136,19 +133,19 @@
     },
 
     'click .login-link': function(e, template) {
-      template.setVar('mode', 'login');
+      LoginComponents.mode.set('login');
       template.setVar('saved', false);
       template.setVar('errorMsg', false);
     },
 
     'click .forgot-pw-link': function(e, template) {
-      template.setVar('mode', 'forgot-pw');
+      LoginComponents.mode.set('forgot-pw');
       template.setVar('saved', false);
       template.setVar('errorMsg', false);
     },
 
     'click .sign-up-link': function(e, template) {
-      template.setVar('mode', 'sign-up');
+      LoginComponents.mode.set('sign-up');
       template.setVar('saved', false);
       template.setVar('errorMsg', false);
     }
