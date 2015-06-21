@@ -1,6 +1,14 @@
-
 (function() {
   'use strict';
+
+  // Reactive var for when login button is clicked
+  var savingVar = ReactiveVar(false);
+
+  // Reactive function as to whether we're logging in because login button
+  // was clicked (as opposed to auto-login)
+  LoginComponents.loggingIn = function() {
+    return savingVar.get();
+  };
 
   Template.loginOrSignUp.onCreated(function() {
     this.createVars({
@@ -11,9 +19,6 @@
       // * "duplicate-email" - Email already in use for sign up
       // * "unknown" - Generic unknown error
       errorMsg: false,
-
-      // Whether save spinner should be going
-      saving: false,
 
       // Whether requested action compelte
       saved: false
@@ -30,7 +35,8 @@
       var instance = Template.instance();
       return _.extend(instance.getVars(), {
         mode: LoginComponents.mode.get(),
-        showTabs: LoginComponents.showTabs
+        showTabs: LoginComponents.showTabs,
+        saving: savingVar.get()
       }, this);
     }
   });
@@ -53,9 +59,9 @@
         return;
       }
 
-      template.setVar('saving', true);
+      savingVar.set(true);
       Meteor.loginWithPassword(email, pass, function(err) {
-        template.setVar('saving', false);
+        savingVar.set(false);
         if (err) {
           template.setVar('errorMsg', 'bad-login');
         } else {
@@ -81,13 +87,13 @@
         return;
       }
 
-      template.setVar('saving', true);
+      savingVar.set(true);
       Accounts.createUser({
         email: email,
         password: pass
       }, 
       function(err) {
-        template.setVar('saving', false);
+        savingVar.set(false);
         if (err) {
           if (err.error === 403) {
             template.setVar('errorMsg', 'duplicate-email');
@@ -112,12 +118,12 @@
         return;
       }
 
-      template.setVar('saving', true);
+      savingVar.set(true);
       template.setVar('saved', false);
       Accounts.forgotPassword({
         email: email
       }, function(err) {
-        template.setVar('saving', false);
+        savingVar.set(false);
         if (err) {
           if (err.error === 403) {
             template.setVar('errorMsg', 'no-email');

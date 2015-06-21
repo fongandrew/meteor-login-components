@@ -17,7 +17,6 @@ Package.onUse(function(api) {
     'templating',
     'underscore'
   ], 'client');
-  api.export('LoginComponents');
   api.addFiles([
     '_config.js',
     'login_sign_up.html',
@@ -25,4 +24,5 @@ Package.onUse(function(api) {
     'signout_button.html',
     'signout_button.js'
   ], 'client');
+  api.export('LoginComponents', 'client');
 });
