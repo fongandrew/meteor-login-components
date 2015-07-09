@@ -1,6 +1,11 @@
 (function() {
   'use strict';
 
+  var emailRegex = new RegExp(
+    "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+" + 
+    "@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?" + 
+    "(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+
   // Reactive var for when login button is clicked
   var savingVar = ReactiveVar(false);
 
@@ -20,7 +25,7 @@
       // * "unknown" - Generic unknown error
       errorMsg: false,
 
-      // Whether requested action compelte
+      // Whether requested action complete
       saved: false
     });
   });
@@ -50,7 +55,7 @@
       var email = $(e.target).find('[name=email]').val().toLowerCase();
       var pass = $(e.target).find('[name=password]').val();
 
-      if (! RE.email.test(email)) {
+      if (! emailRegex.test(email)) {
         template.setVar('errorMsg', 'bad-email');
         return;
       }
@@ -78,7 +83,7 @@
       var email = $(e.target).find('[name=email]').val().toLowerCase();
       var pass = $(e.target).find('[name=password]').val();
 
-      if (! RE.email.test(email)) {
+      if (! emailRegex.test(email)) {
         template.setVar('errorMsg', 'bad-email');
         return;
       }
@@ -113,7 +118,7 @@
       template.setVar('errorMsg', false); // Reset error messages
 
       var email = $(e.target).find('[name=email]').val();
-      if (! RE.email.test(email)) {
+      if (! emailRegex.test(email)) {
         template.setVar('errorMsg', 'bad-email');
         return;
       }
