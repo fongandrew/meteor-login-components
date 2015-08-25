@@ -1,6 +1,10 @@
-<template name="signoutButton">
+<template name="logoutButton">
   <button class="{{buttonClasses}} js-logout-link">
     <i class="fa fa-sign-out"></i>
-    <span class="link">Sign Out</span>
+    <span class="link">Log Out</span>
   </button>
+</template>
+
+<template name="signoutButton">
+  {{> logoutButton}}
 </template>

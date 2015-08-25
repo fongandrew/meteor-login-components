@@ -3,7 +3,7 @@ LoginComponents = {
   // Replace in main app code
   loginCallback: function() {},
   signupCallback: function() {},
-  signoutCallback: function() {},
+  logoutCallback: function() {},
 
   // Show tabs for login UI?
   showTabs: true,
@@ -12,5 +12,11 @@ LoginComponents = {
   // * login
   // * forgot-pw
   // * sign-up
-  mode: new ReactiveVar('login')
+  mode: new ReactiveVar('login'),
+
+  // Error mode => if true, server errors during login and signup will be
+  // passed during to the login and signup callbacks. Errors durin logout
+  // are always passed.
+  callbackOnErr: false
+
 };

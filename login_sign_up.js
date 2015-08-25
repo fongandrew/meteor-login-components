@@ -69,8 +69,13 @@
         savingVar.set(false);
         if (err) {
           template.setVar('errorMsg', 'bad-login');
-        } else {
-          LoginComponents.loginCallback();
+        }
+        if (!err || LoginComponents.callbackOnErr) {
+          if (LoginComponents.signinCallback) {
+            LoginComponents.signinCallback(err);
+          } else {
+            LoginComponents.loginCallback(err);
+          }
         }
       });
     },
@@ -96,7 +101,7 @@
       Accounts.createUser({
         email: email,
         password: pass
-      }, 
+      },
       function(err) {
         savingVar.set(false);
         if (err) {
@@ -106,8 +111,9 @@
             template.setVar('errorMsg', 'unknown');
             console.error(err);
           }
-        } else {
-          LoginComponents.signupCallback();
+        }
+        if (!err || LoginComponents.callbackOnErr) {
+          LoginComponents.signupCallback(err);
         }
       });
     },
@@ -136,7 +142,7 @@
             template.setVar('errorMsg', 'unknown');
             console.error(err);
           }
-        } 
+        }
         else {
           template.setVar('saved', true);
         }

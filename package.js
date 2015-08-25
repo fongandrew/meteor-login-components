@@ -1,6 +1,6 @@
 Package.describe({
   name: 'fongandrew:login-components',
-  version: '0.1.0',
+  version: '0.2.0',
   summary: 'Standalone login / sign-up templates that\'s easier to compose ' +
            'than accounts-ui-unstyled',
   git: 'https://github.com/fongandrew/meteor-login-components.git'

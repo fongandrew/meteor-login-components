@@ -1,9 +1,11 @@
 (function() {
   'use strict';
 
-  Template.signoutButton.events({
+  Template.logoutButton.events({
     'click .js-logout-link': function() {
-      Meteor.logout(LoginComponents.logoutCallback);
+      var callback = (LoginComponents.signoutCallback ||
+                      LoginComponents.logoutCallback);
+      Meteor.logout(callback);
     }
   });
 
